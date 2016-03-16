@@ -9,12 +9,11 @@ var parseArgs = require( 'minimist' );
 var notifier = require( 'update-notifier' );
 var pkg = require( './../package.json' );
 var opts = require( './opts.json' );
-var file = require( './../lib/file.js' );
-var string = require( './../lib/string.js' );
+var wandbox = require( './../lib' );
+
 
 // VARIABLES //
 
-var code;
 var args;
 
 
@@ -33,6 +32,7 @@ function onClose() {
 
 // INIT //
 
+process.title = pkg.name;
 process.stdout.on( 'error', process.exit );
 
 
@@ -68,70 +68,56 @@ if ( args.version ) {
 
 opts = {};
 
-code =  args._[ 0 ];
-
 if ( args.compiler ) {
 	opts.compiler = args.compiler;
 }
-
-if ( args.codes ) {
-	opts.codes = args.codes;
+if ( args.files ) {
+	opts.files = args.files.split( ',' );
 }
-
 if ( args.options ) {
-	opts.options = args.options;
+	opts.options = args.options.split( ',' );
 }
-
 if ( args.stdin ) {
 	opts.stdin = args.stdin;
 }
-
-if ( args[ 'compiler-option-raw' ] ) {
-	opts[ 'compiler-option-raw' ] = args[ 'compiler-option-raw' ];
+if ( args[ 'compile-options' ] ) {
+	opts[ 'compile-options' ] = args[ 'compile-options' ].split( ',' );
+}
+if ( args[ 'runtime-options' ] ) {
+	opts[ 'runtime-options' ] = args[ 'runtime-options' ].split( ',' );
+}
+if ( args.permalink ) {
+	opts.permalink = args.permalink;
 }
 
-if ( args[ 'runtime-option-raw' ] ) {
-	opts[ 'runtime-option-raw' ] = args[ 'runtime-option-raw' ];
-}
 
-if ( args.save ) {
-	opts.save = args.save;
-}
+// WANDBOX //
 
-// RUN CODE //
-
-if ( args.file === true ) {
-	if ( args.output ) {
-		file( args.output, code, opts, clbk );
-	} else {
-		file( code, opts, clbk );
-	}
-} else {
-	if ( args.output ) {
-		string( args.output, code, opts, clbk );
-	} else {
-		string( code, opts, clbk );
-	}
-}
+wandbox( args._[0], opts, clbk );
 
 /**
-* FUNCTION: clbk( error, data, info )
+* FUNCTION: clbk( error, results )
 *	Callback invoked upon receiving a request response.
 *
 * @private
 * @param {Error|Null} error - error object
-* @param {Object} message - an http.IncomingMessage
-* @param {Object} body - response body
+* @param {Object} results - request results
 * @returns {Void}
 */
-function clbk( error, body ) {
+function clbk( error, results ) {
+	var str;
 	if ( error ) {
-		process.stderr.write( error.message );
-		return;
+		process.stderr.write( error.message+'\n', 'utf8' );
+		return process.exit( 1 );
 	}
-	if ( !args.output ) {
-		process.stdout.write( JSON.stringify( body ) + '\n' );
-	} else {
-		process.stdout.write( 'File with results successfully written. \n' );
+	// Write all results to `stderr`:
+	str = JSON.stringify( results );
+	process.stderr.write( str+'\n', 'utf8' );
+
+	// Write the `program_message` to `stdout`:
+	if ( results.program_message ) {
+		str = results.program_message;
+		process.stdout.write( str+'\n', 'utf8' );
 	}
+	process.exit( 0 );
 }

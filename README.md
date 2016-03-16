@@ -353,10 +353,10 @@ Options:
        --compiler             Compiler name. Default: gcc-head.
        --options              Compiler associated options. Default: boost-1.60,warning,gnu++1y.
        --files                Supporting file names; file1.cpp,file2.cpp,...
-       --permalink            Return a permalink. Default: false.
-       --stdin                Standard input.
        --compile-options      Compile options (comma-separated list).
        --runtime-options      Runtime options (comma-separated list).
+       --stdin                Standard input.
+       --permalink            Return a permalink. Default: false.
 ```
 
 

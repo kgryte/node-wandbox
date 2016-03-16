@@ -2,17 +2,15 @@
 	"string": [
 		"compiler",
 		"options",
-		"codes",
+		"files",
 		"stdin",
-		"compiler-option-raw",
-		"runtime-option-raw",
-		"output"
+		"compile-options",
+		"runtime-options"
 	],
 	"boolean": [
-		"file",
-		"save",
 		"help",
-		"version"
+		"version",
+		"permalink"
 	],
 	"alias": {
 		"help": [
