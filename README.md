@@ -60,7 +60,7 @@ The `function` accepts the following `options`:
 *	__stdin__: standard input. Default: `''`.
 *	__permalink__: `boolean` indicating whether a permanent static hyperlink should be generated. Default: `false`.
 
-A supporting file can be specified as either a filename or an `object` containing `file` and `code` keys. The function reads each file into memory before sending to [Wandbox][wandbox]. Suppose we have the following files:
+A supporting file can be specified as either a filename or an `object` containing `file` and `code` keys. The implementation reads each file into memory before sending to [Wandbox][wandbox]. Suppose we have the following files
 
 ``` cpp
 // File: program.cpp
@@ -315,7 +315,6 @@ function clbk( error, results ) {
 
 // From file...
 wandbox( './examples/fixtures/code.cpp', clbk );
-
 
 // From string...
 var code = '#include <iostream>\nint main() {\n\tstd::cout << "All is well" << std::endl;}';
