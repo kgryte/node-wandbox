@@ -279,7 +279,7 @@ function clbk( error, results ) {
 }
 ```
 
-This method accepts the same `options` as [`wandbox`](#wandbox).
+This method accepts the same `options` as [`wandbox()`](#wandbox).
 
 
 ---
