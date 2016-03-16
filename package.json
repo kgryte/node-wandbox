@@ -1,7 +1,7 @@
 {
   "name": "wandbox",
   "version": "0.0.0",
-  "description": "Node.js bindings to the Wandbox API.",
+  "description": "Compile and run a program on Wandbox.",
   "author": {
     "name": "Philipp Burckhardt",
     "email": "pburckhardt@outlook.com"
