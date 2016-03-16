@@ -13,7 +13,7 @@
     }
   ],
   "bin": {
-    "runWandbox": "./bin/cli"
+    "wandbox": "./bin/cli"
   },
   "scripts": {
     "test": "tape \"./test/*.js\"",
@@ -26,11 +26,23 @@
     "url": "git://github.com/planeshifter/node-wandbox-api.git"
   },
   "keywords": [
+    "utility",
+    "util",
     "wandbox",
     "api",
+    "compile",
     "compiler",
     "compilation",
-    "social compiler"
+    "c",
+    "c++",
+    "cpp",
+    "python",
+    "cli",
+    "java",
+    "rust",
+    "scala",
+    "erlang",
+    "bash"
   ],
   "bugs": {
     "url": "https://github.com/planeshifter/node-wandbox-api/issues"
@@ -38,7 +50,6 @@
   "dependencies": {
     "debug": "^2.2.0",
     "minimist": "^1.2.0",
-    "request": "^2.69.0",
     "type-name": "^2.0.0",
     "update-notifier": "^0.6.0",
     "utils-copy": "^1.1.0",
