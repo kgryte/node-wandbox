@@ -3,13 +3,13 @@ Usage: wandbox [options] src
 
 Options:
 
-  -h,  --help                 Print this message.
-  -V,  --version              Print the package version.
-       --compiler             Compiler name. Default: gcc-head.
-       --options              Compiler associated options. Default: boost-1.60,warning,gnu++1y.
-       --files                Supporting file names; file1.cpp,file2.cpp,...
-       --compile-options      Compile options (comma-separated list).
-       --runtime-options      Runtime options (comma-separated list).
-       --stdin                Standard input.
-       --permalink            Return a permalink.
+  -h,  --help                   Print this message.
+  -V,  --version                Print the package version.
+       --compiler               Compiler name. Default: gcc-head.
+       --options opts           Compiler associated options. Default: boost-1.60,warning,gnu++1y.
+       --files file1,file2,...  Supporting file names.
+       --compile-options opts   Compile options (comma-separated list).
+       --runtime-options opts   Runtime options (comma-separated list).
+       --stdin input            Standard input.
+       --permalink              Return a permalink.
 
