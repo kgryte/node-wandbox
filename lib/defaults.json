@@ -10,8 +10,8 @@
 		"gnu++1y"
 	],
 	"compiler": "gcc-head",
-	"compile-options": [],
-	"runtime-options": [],
+	"compileOptions": [],
+	"runtimeOptions": [],
 	"stdin": "",
 	"permalink": false
 }

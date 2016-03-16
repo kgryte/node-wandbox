@@ -81,10 +81,10 @@ if ( args.stdin ) {
 	opts.stdin = args.stdin;
 }
 if ( args[ 'compile-options' ] ) {
-	opts[ 'compile-options' ] = args[ 'compile-options' ].split( ',' );
+	opts.compileOptions = args[ 'compile-options' ].split( ',' );
 }
 if ( args[ 'runtime-options' ] ) {
-	opts[ 'runtime-options' ] = args[ 'runtime-options' ].split( ',' );
+	opts.runtimeOptions = args[ 'runtime-options' ].split( ',' );
 }
 if ( args.permalink ) {
 	opts.permalink = args.permalink;
