@@ -1,5 +1,5 @@
 {
-  "name": "wandbox-api",
+  "name": "wandbox",
   "version": "0.0.0",
   "description": "Node.js bindings to the Wandbox API.",
   "author": {
@@ -23,7 +23,7 @@
   "main": "./lib",
   "repository": {
     "type": "git",
-    "url": "git://github.com/planeshifter/node-wandbox-api.git"
+    "url": "git://github.com/planeshifter/node-wandbox.git"
   },
   "keywords": [
     "utility",
@@ -45,7 +45,7 @@
     "bash"
   ],
   "bugs": {
-    "url": "https://github.com/planeshifter/node-wandbox-api/issues"
+    "url": "https://github.com/planeshifter/node-wandbox/issues"
   },
   "dependencies": {
     "debug": "^2.2.0",
