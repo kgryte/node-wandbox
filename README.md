@@ -53,7 +53,7 @@ function clbk( error, results ) {
 
 The `function` accepts the following `options`:
 *	__files__: supporting files. Default: `[]`.
-*	__options__: compiler-dependent options; e.g., whether to display `warnings`, use a particular Boost version, etc. Default: `[]`.
+*	__options__: compiler-dependent options; e.g., whether to display `warnings`, use a particular Boost version, etc. Default: `["boost-1.60","warning","gnu++1y"]`.
 *	__compiler__: compiler name. Default: `'gcc-head'`.
 *	__compileOptions__: an `array` of compiler options . Default: `[]`.
 *	__runtimeOptions__: an `array` of runtime options. Default: `[]`.

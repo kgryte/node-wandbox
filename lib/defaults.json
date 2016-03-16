@@ -1,9 +1,17 @@
 {
+	"protocol": "http",
+	"hostname": "melpon.org",
+	"port": 80,
+	"pathname": "/wandbox/api/compile.json",
+	"files": [],
+	"options": [
+		"boost-1.60",
+		"warning",
+		"gnu++1y"
+	],
 	"compiler": "gcc-head",
-	"codes": [],
-	"options": "boost-1.60,warning,gnu++1y",
+	"compile-options": [],
+	"runtime-options": [],
 	"stdin": "",
-	"compiler-option-raw": "",
-	"runtime-option-raw": "",
-	"save": false
+	"permalink": false
 }
