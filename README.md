@@ -18,6 +18,7 @@ $ npm install wandbox
 var wandbox = require( 'wandbox' );
 ```
 
+<a name="wandbox"></a>
 #### wandbox( src[, options], clbk )
 
 Compiles and run a `src` file using [Wandbox][wandbox]. Consider the following `C++` file
@@ -51,22 +52,124 @@ function clbk( error, results ) {
 ```
 
 The `function` accepts the following `options`:
-*	__files__: an object `array` containing supporting files. Default: `[]`.
+*	__files__: supporting files. Default: `[]`.
 *	__options__: compiler-dependent options; e.g., whether to display `warnings`, use a particular Boost version, etc. Default: `[]`.
 *	__compiler__: compiler name. Default: `'gcc-head'`.
-*	__compilerOptions__: an `array` of compiler options . Default: `[]`.
+*	__compileOptions__: an `array` of compiler options . Default: `[]`.
 *	__runtimeOptions__: an `array` of runtime options. Default: `[]`.
 *	__stdin__: standard input. Default: `''`.
-*	__save__: `boolean` indicating whether a permanent static hyperlink should be generated. Default: `false`.
+*	__permalink__: `boolean` indicating whether a permanent static hyperlink should be generated. Default: `false`.
 
-The default compiler is `gcc-head`. To specify an alternative compiler, set the `compiler` option. For example, consider the following Python file
+A supporting file can be specified as either a filename or an `object` containing `file` and `code` keys. The function reads each file into memory before sending to [Wandbox][wandbox]. Suppose we have the following files:
+
+``` cpp
+// File: program.cpp
+#include <iostream>
+#include "add.h"
+
+int main() {
+	std::cout << "Addition: " << add(5,2) << std::endl;
+}
+```
+
+``` cpp
+// File: add.h
+#ifndef ADD_H
+#define ADD_H
+
+int add(int x, int y);
+
+#endif
+``` 
+
+``` cpp
+// File: add.cpp
+#include "add.h"
+
+int add(int x, int y) {
+	return x + y;
+}
+```
+
+To compile and run,
+
+``` javascript
+var opts = {
+	'files': [
+		'./add.h',
+		'./add.cpp'
+	],
+	'compileOptions': [
+		'add.cpp'		// Note: we need to add the additional *.cpp files to be compiled
+	]
+};
+
+wandbox( './program.cpp', clbk );
+
+function clbk( error, results ) {
+	if ( error ) {
+		throw new Error( error.message );
+	}
+	console.log( results );
+	/* returns
+		{
+			"program_message": "Addition: 7\n",
+			"program_output": "Addition: 7\n",
+			"status": "0"
+		}
+	*/
+}
+```
+
+Alternatively, if supporting file source code resides in-memory,
+
+``` javascript
+var opts = {
+	'files': [
+		{
+			'file': 'add.h',
+			'code': '#ifndef ADD_H\n#define ADD_H\nint add(int x, int y);\n#endif'
+		},
+		{
+			'file': 'add.cpp',
+			'code': '#include \"add.h\"\nint add(int x, int y) {return x + y;}'
+		}
+	],
+	'compileOptions': [
+		'add.cpp'		// Note: we need to add the additional *.cpp files to be compiled
+	]
+};
+
+wandbox( './program.cpp', clbk );
+```
+
+A combination of both filenames and in-memory source code is also supported.
+
+``` javascript
+var opts = {
+	'files': [
+		'./add.h',
+		{
+			'file': 'add.cpp',
+			'code': '#include \"add.h\"\nint add(int x, int y) {return x + y;}'
+		}
+	],
+	'compileOptions': [
+		'add.cpp'		// Note: we need to add the additional *.cpp files to be compiled
+	]
+};
+
+wandbox( './program.cpp', clbk );
+```
+
+The default compiler is `gcc-head`. To use an alternative compiler, set the `compiler` option. For example, given the following Python file
 
 ``` python
 # File: main.py
 print("I can also run Python.")
 ```
 
-To run using a Python runtime,
+to run using a Python runtime,
 
 ```javascript
 var opts = {
@@ -90,7 +193,7 @@ function clbk( error, results ) {
 }
 ```
 
-To specify options associated with a particular compiler, set the `options` option. For example, consider the following `C++` file
+To specify options associated with a particular compiler, set the `options` option. For example, provided the following `C++` file
 
 ``` cpp
 // File: program.cpp
@@ -101,7 +204,7 @@ int main() {
 }
 ```
 
-To set associated compiler options,
+to set associated options,
 
 ```javascript
 var opts = {
@@ -130,12 +233,12 @@ function clbk( error, results ) {
 }
 ```
 
-To generate a permanent link to the compiled program, set the `save` option to `true`.
+To generate a permanent link to the compiled program, set the `permalink` option to `true`.
 
 ```javascript
 var opts = {
 	'compiler': 'python-3.5.0',
-	'save': true
+	'permalink': true
 };
 
 wandbox( './main.py', opts, clbk );
@@ -157,21 +260,8 @@ function clbk( error, results ) {
 }
 ```
 
-Depending on option configuration and program output, the results [`object`][wandbox-docs] may have the following fields:
 
-*	__status__: exit code.
-*	__signal__: signal message.
-*	__compiler_output__: `stdout` during compilation.
-*	__compiler_error__: `stderr` during compilation.
-*	__compiler_message__: merged `compiler_output` and `compiler_error`.
-*	__program_output__: `stdout` during runtime.
-*	__program_error__: `stderr` during runtime.
-*	__program_message__: merged `program_output` and `program_error`.
-*	__permlink__: link portion of permanent static hyperlink.
-*	__url__: permanent static hyperlink to compiled program.
-
-
-#### wandbox.fromString( code[, opts], clbk )
+#### wandbox.fromString( code[, options], clbk )
 
 Compile and run a source code `string`.
 
@@ -188,6 +278,25 @@ function clbk( error, results ) {
 	// returns {...}
 }
 ```
+
+This method accepts the same `options` as [`wandbox`](#wandbox).
+
+
+---
+## Notes
+
+*	Filenames are resolved relative to the current working directory.
+*	Depending on option configuration and program output, the results [`object`][wandbox-docs] may have the following fields:
+	*	__status__: exit code.
+	*	__signal__: signal message.
+	*	__compiler_output__: `stdout` during compilation.
+	*	__compiler_error__: `stderr` during compilation.
+	*	__compiler_message__: merged `compiler_output` and `compiler_error`.
+	*	__program_output__: `stdout` during runtime.
+	*	__program_error__: `stderr` during runtime.
+	*	__program_message__: merged `program_output` and `program_error`.
+	*	__permlink__: link portion of permanent static hyperlink.
+	*	__url__: permanent static hyperlink to compiled program.
 
 
 ---
