@@ -21,7 +21,7 @@ var wandbox = require( 'wandbox' );
 <a name="wandbox"></a>
 #### wandbox( src[, options], clbk )
 
-Compiles and run a `src` file using [Wandbox][wandbox]. Consider the following `C++` file
+Compiles and run a `src` file using [Wandbox][wandbox]. For example, given the following `C++` file
 
 ``` cpp
 // File: program.cpp
@@ -31,7 +31,7 @@ int main() {
 }
 ```
 
-To compile and run on [Wandbox][wandbox],
+to compile and run on [Wandbox][wandbox],
 
 ``` javascript
 wandbox( './program.cpp', clbk );
