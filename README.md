@@ -348,41 +348,40 @@ Usage: wandbox [options] src
 
 Options:
 
-  -h,  --help                Print this message.
-  -V,  --version             Print the package version.
-       --file                Boolean indicating whether src is a file path or code to be evaluated. Default: false.
-       --compiler            Name of used compiler. Default: gcc-head.
-       --options             Used options for a compiler joined by comma. Default: boost-1.60,warning,gnu++1y.
-       --codes               Additional codes, objects with `file` and `code` keys. Default: [].
-       --save                Boolean indicating whether permanent link should be generated. Default: false.
-       --stdin               Standard input.
-       --compiler-option-raw Additional compile-time options joined by line-break. Default: "".
-       --runtime-option-raw  Additional run-time options joined by line-break. Default: "".
-  -o,  --output file          Output file path.
+  -h,  --help                 Print this message.
+  -V,  --version              Print the package version.
+       --compiler             Compiler name. Default: gcc-head.
+       --options              Compiler associated options. Default: boost-1.60,warning,gnu++1y.
+       --files                Supporting file names; file1.cpp,file2.cpp,...
+       --permalink            Return a permalink. Default: false.
+       --stdin                Standard input.
+       --compile-options      Compile options (comma-separated list).
+       --runtime-options      Runtime options (comma-separated list).
 ```
+
+
+### Notes
+
+*	Only the `program_message` is written to `stdout`.
+*	The complete raw API response is written to `stderr`.
 
 
 ### Examples
 
-Setting the compiler using the command-line option:
-
 ``` bash
-$ DEBUG=* wandbox --compiler <compiler> <code comes here>
-# => '[{...},{...},...]'
+$ DEBUG=* wandbox ./main.cpp > ./output.txt
 ```
 
 For local installations, modify the command to point to the local installation directory; e.g.,
 
 ``` bash
-$ DEBUG=* ./node_modules/.bin/wandbox --file --compiler <compiler> <file_path comes here>
-# => '[{...},{...},...]'
+$ DEBUG=* ./node_modules/.bin/wandbox ./main.cpp > ./output.txt
 ```
 
 Or, if you have cloned this repository and run `npm install`, modify the command to point to the executable; e.g.,
 
 ``` bash
-$ DEBUG=* node ./bin/cli --compiler <compiler> <code comes here>
-# => '[{...},{...},...]'
+$ DEBUG=* node ./bin/cli ./main.cpp > ./output.txt
 ```
 
 
@@ -413,23 +412,6 @@ Istanbul creates a `./reports/coverage` directory. To access an HTML version of 
 ``` bash
 $ make view-cov
 ```
-
-
-### Browser Support
-
-This repository uses [Testling][testling] for browser testing. To run the tests in a (headless) local web browser, execute the following command in the top-level application directory:
-
-``` bash
-$ make test-browsers
-```
-
-To view the tests in a local web browser,
-
-``` bash
-$ make view-browser-tests
-```
-
-<!-- [![browser support][browsers-image]][browsers-url] -->
 
 
 ---
