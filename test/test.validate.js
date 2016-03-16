@@ -62,18 +62,20 @@ tape( 'if provided a `compiler` option which is not a primitive string, the func
 	t.end();
 });
 
-tape( 'if provided a `options` option which is not a primitive string, the function returns a type error', function test( t ) {
+tape( 'if provided a `options` option which is not a primitive string array, the function returns a type error', function test( t ) {
 	var values;
 	var err;
 	var i;
 
 	values = [
+		'5',
 		5,
 		NaN,
 		null,
 		undefined,
 		true,
 		[],
+		['5',null],
 		{},
 		function(){}
 	];
@@ -112,25 +114,27 @@ tape( 'if provided a `stdin` option which is not a primitive string, the functio
 	t.end();
 });
 
-tape( 'if provided a `compiler-option-raw` option which is not a primitive string, the function returns a type error', function test( t ) {
+tape( 'if provided a `compileOptions` option which is not a primitive string array, the function returns a type error', function test( t ) {
 	var values;
 	var err;
 	var i;
 
 	values = [
+		'5',
 		5,
 		NaN,
 		null,
 		undefined,
 		true,
 		[],
+		['5',null],
 		{},
 		function(){}
 	];
 
 	for ( i = 0; i < values.length; i++ ) {
 		err = validate( {}, {
-			'compiler-option-raw': values[i]
+			'compileOptions': values[i]
 		});
 		t.ok( err instanceof TypeError, 'returns type error when provided ' + values[i] );
 	}
@@ -138,64 +142,65 @@ tape( 'if provided a `compiler-option-raw` option which is not a primitive strin
 });
 
 
-tape( 'if provided a `runtime-option-raw` option which is not a primitive string, the function returns a type error', function test( t ) {
+tape( 'if provided a `runtimeOptions` option which is not a primitive string array, the function returns a type error', function test( t ) {
 	var values;
 	var err;
 	var i;
 
 	values = [
+		'5',
 		5,
 		NaN,
 		null,
 		undefined,
 		true,
 		[],
+		['5',null],
 		{},
 		function(){}
 	];
 
 	for ( i = 0; i < values.length; i++ ) {
 		err = validate( {}, {
-			'runtime-option-raw': values[i]
+			'runtimeOptions': values[i]
 		});
 		t.ok( err instanceof TypeError, 'returns type error when provided ' + values[i] );
 	}
 	t.end();
 });
 
-tape( 'if provided a `codes` option which is not an objective array, the function returns a type error', function test( t ) {
+tape( 'if provided a `files` option which is not an array, the function returns a type error', function test( t ) {
 	var values;
 	var err;
 	var i;
 
 	values = [
-		'a',
+		'5',
 		5,
 		NaN,
 		null,
 		undefined,
 		true,
-		[],
 		{},
 		function(){}
 	];
 
 	for ( i = 0; i < values.length; i++ ) {
 		err = validate( {}, {
-			'codes': values[i]
+			'files': values[i]
 		});
 		t.ok( err instanceof TypeError, 'returns type error when provided ' + values[i] );
 	}
 	t.end();
 });
 
-tape( 'if provided a `save` option which is not a boolean primitive, the function returns a type error', function test( t ) {
+tape( 'if provided a `permalink` option which is not a boolean primitive, the function returns a type error', function test( t ) {
 	var values;
 	var err;
 	var i;
 
 	values = [
-		'a',
+		'5',
 		5,
 		NaN,
 		null,
@@ -207,7 +212,7 @@ tape( 'if provided a `save` option which is not a boolean primitive, the functio
 
 	for ( i = 0; i < values.length; i++ ) {
 		err = validate( {}, {
-			'save': values[i]
+			'permalink': values[i]
 		});
 		t.ok( err instanceof TypeError, 'returns type error when provided ' + values[i] );
 	}
@@ -215,18 +220,30 @@ tape( 'if provided a `save` option which is not a boolean primitive, the functio
 });
 
 tape( 'the function returns `null` if all options are valid', function test( t ) {
+	var options;
+	var opts;
 	var err;
 
-	err = validate( {}, {
+	opts = {};
+	options = {
 		'compiler': 'gcc-head',
-		'codes': [ { 'file': 'myfile.cpp' } ],
-		'options': '',
-		'save': true,
+		'files': [
+			'add.h',
+			{
+				'file': 'add.cpp',
+				'code': ''
+			}
+		],
+		'options': ['beep','boop'],
+		'permalink': true,
 		'stdin': '',
-		'runtime-option-raw': '',
-		'compiler-option-raw': ''
-	});
+		'runtimeOptions': ['beep','boop'],
+		'compileOptions': ['a','b']
+	};
+	err = validate( opts, options );
+
 	t.equal( err, null, 'returns null' );
+	t.deepEqual( opts, options, 'sets options' );
 
 	t.end();
 });
