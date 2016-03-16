@@ -24,7 +24,6 @@ Compile and run a `src` file on [Wandbox][wandbox].
 
 ``` cpp
 // File: program.cpp
-
 #include <iostream>
 int main() {
 	std::cout << "All is well" << std::endl;
@@ -62,7 +61,6 @@ The default compiler is `gcc-head`. To specify an alternative compiler, set the 
 
 ``` python
 # File: main.py
-
 print("I can also run Python.")
 ```
 
@@ -92,7 +90,6 @@ To specify options associated with a particular compiler, set the `options` opti
 
 ``` cpp
 // File: program.cpp
-
 #include <iostream>
 int main() {
 	int x = 0;
@@ -131,7 +128,6 @@ To generate a permanent link to the compiled program, set the `save` option to `
 
 ``` python
 # File: main.py
-
 print("I can also run Python.")
 ```
 
