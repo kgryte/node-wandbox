@@ -2,7 +2,7 @@ Wandbox
 ===
 [![NPM version][npm-image]][npm-url] [![Build Status][build-image]][build-url] [![Coverage Status][coverage-image]][coverage-url] [![Dependencies][dependencies-image]][dependencies-url]
 
-> Compile and run programs on [Wandbox][wandbox].
+> Compile and run a program using [Wandbox][wandbox].
 
 
 ## Installation
@@ -18,9 +18,9 @@ $ npm install wandbox
 var wandbox = require( 'wandbox' );
 ```
 
-#### wandbox( [dest,] src[, options], clbk )
+#### wandbox( src[, options], clbk )
 
-Compile and run a `src` file on [Wandbox][wandbox]. 
+Compiles and run a `src` file using [Wandbox][wandbox]. Consider the following `C++` file
 
 ``` cpp
 // File: program.cpp
@@ -29,6 +29,8 @@ int main() {
 	std::cout << "All is well" << std::endl;
 }
 ```
+
+To compile and run on [Wandbox][wandbox],
 
 ``` javascript
 wandbox( './program.cpp', clbk );
@@ -49,20 +51,22 @@ function clbk( error, results ) {
 ```
 
 The `function` accepts the following `options`:
-*	__files__: an object `array` containing additional code. Default: `[]`.
-*	__options__: compiler-dependent options; e.g., whether to display `warnings`, include Boost, etc. Default: `[]`.
+*	__files__: an object `array` containing supporting files. Default: `[]`.
+*	__options__: compiler-dependent options; e.g., whether to display `warnings`, use a particular Boost version, etc. Default: `[]`.
 *	__compiler__: compiler name. Default: `'gcc-head'`.
 *	__compilerOptions__: an `array` of compiler options . Default: `[]`.
 *	__runtimeOptions__: an `array` of runtime options. Default: `[]`.
 *	__stdin__: standard input. Default: `''`.
 *	__save__: `boolean` indicating whether a permanent static hyperlink should be generated. Default: `false`.
 
-The default compiler is `gcc-head`. To specify an alternative compiler, set the `compiler` option.
+The default compiler is `gcc-head`. To specify an alternative compiler, set the `compiler` option. For example, consider the following Python file
 
 ``` python
 # File: main.py
 print("I can also run Python.")
 ```
+
+To run using a Python runtime,
 
 ```javascript
 var opts = {
@@ -86,7 +90,7 @@ function clbk( error, results ) {
 }
 ```
 
-To specify options associated with a particular compiler, set the `options` option.
+To specify options associated with a particular compiler, set the `options` option. For example, consider the following `C++` file
 
 ``` cpp
 // File: program.cpp
@@ -96,6 +100,8 @@ int main() {
 	std::cout << "hoge" << std::endl;
 }
 ```
+
+To set associated compiler options,
 
 ```javascript
 var opts = {
@@ -126,11 +132,6 @@ function clbk( error, results ) {
 
 To generate a permanent link to the compiled program, set the `save` option to `true`.
 
-``` python
-# File: main.py
-print("I can also run Python.")
-```
-
 ```javascript
 var opts = {
 	'compiler': 'python-3.5.0',
@@ -156,7 +157,7 @@ function clbk( error, results ) {
 }
 ```
 
-Depending on configuration, the results [`object`][wandbox-docs] may have the following fields:
+Depending on option configuration and program output, the results [`object`][wandbox-docs] may have the following fields:
 
 *	__status__: exit code.
 *	__signal__: signal message.
@@ -170,7 +171,7 @@ Depending on configuration, the results [`object`][wandbox-docs] may have the fo
 *	__url__: permanent static hyperlink to compiled program.
 
 
-#### wandbox.fromString( [dest,] code[, opts], clbk )
+#### wandbox.fromString( code[, opts], clbk )
 
 Compile and run a source code `string`.
 
@@ -203,11 +204,11 @@ function clbk( error, results ) {
 	// returns {...}
 }
 
-// File:
+// From file...
 wandbox( './examples/fixtures/code.cpp', clbk );
 
 
-// String:
+// From string...
 var code = '#include <iostream>\nint main() {\n\tstd::cout << "All is well" << std::endl;}';
 
 wandbox.fromString( code, clbk );
