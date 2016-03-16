@@ -356,7 +356,7 @@ Options:
        --compile-options      Compile options (comma-separated list).
        --runtime-options      Runtime options (comma-separated list).
        --stdin                Standard input.
-       --permalink            Return a permalink. Default: false.
+       --permalink            Return a permalink.
 ```
 
 
